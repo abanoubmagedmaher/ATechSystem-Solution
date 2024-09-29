@@ -1,5 +1,6 @@
 
 using ATechSystem.Models;
+using ATechSystem.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace ATechSystem
@@ -17,6 +18,10 @@ namespace ATechSystem
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ATechSystem_db"));
             });
+            #endregion
+
+            #region Register Repository
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();  
             #endregion
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
