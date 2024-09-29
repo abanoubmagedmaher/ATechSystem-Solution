@@ -24,6 +24,7 @@ namespace ATechSystem
                 app.UseSwaggerUI();
             }
 
+            
             app.UseAuthorization();
 
 
