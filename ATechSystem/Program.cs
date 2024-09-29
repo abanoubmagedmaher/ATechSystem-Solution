@@ -1,4 +1,7 @@
 
+using ATechSystem.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace ATechSystem
 {
     public class Program
@@ -7,10 +10,15 @@ namespace ATechSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
             // Add services to the container.
-
             builder.Services.AddControllers();
+            #region Register DbContext
+            builder.Services.AddDbContext<ATechSystemContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ATechSystem_db"));
+            });
+            #endregion
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
