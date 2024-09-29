@@ -21,7 +21,7 @@ namespace ATechSystem.Repository
 
         public void Update(Department dept)
         {
-            throw new NotImplementedException();
+            dbcontext.Update(dept);
         }
 
         public void Delete(int id)

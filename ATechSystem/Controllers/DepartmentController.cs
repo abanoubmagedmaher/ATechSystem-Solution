@@ -23,14 +23,19 @@ namespace ATechSystem.Controllers
             return Ok(deptLst);
         }
 
-        [HttpGet]
-        [Route("{id}")]// api/Department/id => Get
+        [HttpGet("{id:int}")] // api/Department/id => Get
         public IActionResult GetDepartment(int id)
         {
             var dept = _departmentRepo.GetdeptById(id);
             return Ok(dept);
+        }
 
+        [HttpGet("{name:alpha}")]
 
+        public IActionResult GetDeptByName(string name)
+        {
+            var dept = _departmentRepo.GetAll().Where(d => d.Name.ToLower() == name.Trim().ToLower()).FirstOrDefault();
+            return Ok(dept);
         }
         #endregion
 
@@ -45,11 +50,16 @@ namespace ATechSystem.Controllers
         #endregion
 
         #region Update
-        //[HttpPut] // api/Department => PUT
-        //public IActionResult UpdateDept(Department dept)
-        //{
-
-        //}
+        [HttpPut] // api/Department => PUT
+        public IActionResult UpdateDept(Department dept)
+        {
+            var deptById = _departmentRepo.GetdeptById(dept.Id);
+            if (deptById == null)
+                return BadRequest("Canot Update Department");
+            _departmentRepo.Update(dept);
+            _departmentRepo.Save();
+            return Ok(dept);
+        }
         #endregion
 
         #region Delete
