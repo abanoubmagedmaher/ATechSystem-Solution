@@ -1,0 +1,6 @@
+@ATechSystem_HostAddress = http://localhost:5219
+
+GET {{ATechSystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
