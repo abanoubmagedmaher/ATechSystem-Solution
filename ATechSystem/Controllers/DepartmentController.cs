@@ -31,7 +31,6 @@ namespace ATechSystem.Controllers
         }
 
         [HttpGet("{name:alpha}")]
-
         public IActionResult GetDeptByName(string name)
         {
             var dept = _departmentRepo.GetAll().Where(d => d.Name.ToLower() == name.Trim().ToLower()).FirstOrDefault();
@@ -50,15 +49,23 @@ namespace ATechSystem.Controllers
         #endregion
 
         #region Update
-        [HttpPut] // api/Department => PUT
-        public IActionResult UpdateDept(Department dept)
+        [HttpPut("{id:int}")] // api/Department => PUT
+        public IActionResult UpdateDept(int id,Department dept)
         {
-            var deptById = _departmentRepo.GetdeptById(dept.Id);
-            if (deptById == null)
-                return BadRequest("Canot Update Department");
-            _departmentRepo.Update(dept);
-            _departmentRepo.Save();
-            return Ok(dept);
+            var deptFromDB= _departmentRepo.GetdeptById(id);
+            if (deptFromDB != null)
+            {
+                deptFromDB.Name = dept.Name;
+                deptFromDB.MangerName = dept.MangerName;
+                //_departmentRepo.Update(dept);
+                _departmentRepo.Save();
+                return Ok(dept);
+            }
+            else
+            {
+                return NotFound("Department Not Found");
+            }
+        
         }
         #endregion
 
