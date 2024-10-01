@@ -25,9 +25,9 @@ namespace ATechSystem.Repository
             return dbcontext.Employee.ToList();
         }
 
-        public Employee GetdeptById(int id)
+        public Employee GetEmpById(int id)
         {
-            throw new NotImplementedException();
+            return dbcontext.Employee.Find(id);
         }
 
         public void Save()

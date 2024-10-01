@@ -12,7 +12,11 @@ namespace ATechSystem
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllers();
+            #region Handel Custom Validation Error To Show My Custom Validation !!!
+            builder.Services.AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                options.SuppressModelStateInvalidFilter=true); 
+            #endregion
             #region Register DbContext
             builder.Services.AddDbContext<ATechSystemContext>(options =>
             {
@@ -39,6 +43,7 @@ namespace ATechSystem
                }
             );
             #endregion
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
