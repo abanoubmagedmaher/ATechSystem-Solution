@@ -25,6 +25,20 @@ namespace ATechSystem
             builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
             #endregion
 
+            #region Handel CORSE 
+            builder.Services.AddCors(optios => 
+               {
+                   optios.AddPolicy("ATeckPolicy", polict =>
+                   {
+                       polict.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+                       
+                   });
+                   
+               }
+            );
+            #endregion
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -38,7 +52,9 @@ namespace ATechSystem
                 app.UseSwaggerUI();
             }
 
-            
+            app.UseStaticFiles();
+
+            app.UseCors("ATeckPolicy");
             app.UseAuthorization();
 
 
