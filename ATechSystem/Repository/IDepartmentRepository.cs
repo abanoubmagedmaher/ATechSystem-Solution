@@ -8,6 +8,7 @@ namespace ATechSystem.Repository
         public void Update(Department dept);
         public void Delete(int id);
         public List<Department> GetAll();
+        public List<Department> GetAllDeptDetails();
         public Department GetdeptById(int id);
         public void Save();
        

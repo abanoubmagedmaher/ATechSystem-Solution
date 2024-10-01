@@ -1,8 +1,9 @@
 ﻿using ATechSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ATechSystem.Repository
 {
-    public class DepartmentRepository :IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         ATechSystemContext dbcontext;
         public DepartmentRepository(ATechSystemContext _context)
@@ -31,12 +32,17 @@ namespace ATechSystem.Repository
 
         public Department GetdeptById(int id)
         {
-            return dbcontext.Department.FirstOrDefault(d => d.Id == id);
+            return dbcontext.Department.Find(id);
         }
 
         public void Save()
         {
             dbcontext.SaveChanges();
+        }
+
+        public List<Department> GetAllDeptDetails()
+        {
+            return dbcontext.Department.Include(d => d.Emps).ToList();
         }
     }
 }

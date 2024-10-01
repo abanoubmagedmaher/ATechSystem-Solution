@@ -1,4 +1,5 @@
-﻿using ATechSystem.Models;
+﻿using ATechSystem.DTOS;
+using ATechSystem.Models;
 using ATechSystem.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,22 @@ namespace ATechSystem.Controllers
             var dept = _departmentRepo.GetAll().Where(d => d.Name.ToLower() == name.Trim().ToLower()).FirstOrDefault();
             return Ok(dept);
         }
+
+        [HttpGet("Count")]
+        public ActionResult<List<Department>> GetDepartmentDetails()
+        {
+            List<Department> deptList = _departmentRepo.GetAllDeptDetails();
+            List<DeptWithEmpCountDTO> deptLstDto = new List<DeptWithEmpCountDTO>();
+            foreach (var item in deptList)
+            {
+                DeptWithEmpCountDTO deptDto = new DeptWithEmpCountDTO();
+                deptDto.ID = item.Id;
+                deptDto.Name = item.Name;
+                deptDto.EmpCount = item.Emps.Count();
+                deptLstDto.Add(deptDto);
+            }
+            return Ok(deptLstDto);
+        } 
         #endregion
 
         #region Add

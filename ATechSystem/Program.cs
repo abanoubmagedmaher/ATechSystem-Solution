@@ -21,7 +21,8 @@ namespace ATechSystem
             #endregion
 
             #region Register Repository
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();  
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
             #endregion
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
