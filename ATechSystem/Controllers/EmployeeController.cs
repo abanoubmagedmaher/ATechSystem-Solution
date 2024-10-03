@@ -24,7 +24,7 @@ namespace ATechSystem.Controllers
             return Ok(EmpLst);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetEmployeeById/{id}")]
         public ActionResult<GenralResponseDTO> GetEmployeeById(int id) 
         {
             var emp = _EmployeeRepo.GetEmpById(id);
@@ -48,6 +48,7 @@ namespace ATechSystem.Controllers
         #endregion
 
         #region Add
+        [HttpPost]
         public IActionResult AddEmp(Employee emp)
         {
             if (ModelState.IsValid)

@@ -66,7 +66,7 @@ namespace ATechSystem.Controllers
         #endregion
 
         #region Update
-        [HttpPut("{id:int}")] // api/Department => PUT
+        [HttpPut("UpdateDept/{id:int}")] // api/Department => PUT
         public IActionResult UpdateDept(int id,Department dept)
         {
             var deptFromDB= _departmentRepo.GetdeptById(id);
