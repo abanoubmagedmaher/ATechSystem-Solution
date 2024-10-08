@@ -15,10 +15,12 @@ namespace ATechSystem.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IConfiguration configuration;
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(UserManager<ApplicationUser> userManager,IConfiguration configuration)
         {
             this.userManager = userManager;
+            this.configuration = configuration;
         }
         #region Register
         [HttpPost("Register")]  // POST api/Account/Register
@@ -78,14 +80,14 @@ namespace ATechSystem.Controllers
                         }
 
                         //Create signingCredentials
-                        var SignInKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("!@##%^465dg$%#$se563@$$Q$#%52$%#$5$%#$32143@#$@#$#%"));
+                        var SignInKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SecritKey"]));
                         SigningCredentials signingCredential = new SigningCredentials
                               (SignInKey, SecurityAlgorithms.HmacSha256);
 
                         //Design Token
                         JwtSecurityToken MyToken = new JwtSecurityToken(
-                            issuer: "http://localhost:5219/",
-                            audience: "http://localhost:4200/",
+                            issuer: configuration["JWT:IssuerIp"],
+                            audience: configuration["JWT:AudienceIp"],
                             expires:DateTime.UtcNow.AddHours(1),
                             claims: UserClaims,
                             signingCredentials: signingCredential

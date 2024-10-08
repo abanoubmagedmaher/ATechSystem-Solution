@@ -52,11 +52,11 @@ namespace ATechSystem
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
-                    ValidIssuer= "http://localhost:5219/",
+                    ValidIssuer = builder.Configuration["JWT:IssuerIp"] ,
                     ValidateAudience=true,
-                    ValidAudience= "http://localhost:4200/",
+                    ValidAudience = builder.Configuration["JWT:AudienceIp"] ,
                     IssuerSigningKey=
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("!@##%^465dg$%#$se563@$$Q$#%52$%#$5$%#$32143@#$@#$#%"))
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecritKey"]))
 
                 };
 
