@@ -1,6 +1,7 @@
 ﻿using ATechSystem.DTOS;
 using ATechSystem.Models;
 using ATechSystem.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,8 @@ namespace ATechSystem.Controllers
         }
 
         #region Get Methods 
-        [HttpGet] // api/Department => Get
+        [HttpGet("GetAllDepartment")] //Get => api/Department/GetAllDepartment 
+        [Authorize]
         public IActionResult GetAllDepartment()
         {
             var deptLst = _departmentRepo.GetAll().ToList();

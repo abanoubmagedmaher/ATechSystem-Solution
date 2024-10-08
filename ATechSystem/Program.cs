@@ -1,8 +1,11 @@
 
 using ATechSystem.Models;
 using ATechSystem.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ATechSystem
 {
@@ -18,6 +21,7 @@ namespace ATechSystem
                 .ConfigureApiBehaviorOptions(options =>
                 options.SuppressModelStateInvalidFilter=true); 
             #endregion
+
             #region Register DbContext
             builder.Services.AddDbContext<ATechSystemContext>(options =>
             {
@@ -31,6 +35,32 @@ namespace ATechSystem
             #region Register Repository
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+            #endregion
+
+            #region Handel [Authontication] using JWT
+
+            builder.Services.AddAuthentication(options => {
+
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                // Handel [Authorize]
+                options.DefaultChallengeScheme= JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => // Verified Token 
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false; // If Send Throw Http if HTTPS = true
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer= "http://localhost:5219/",
+                    ValidateAudience=true,
+                    ValidAudience= "http://localhost:4200/",
+                    IssuerSigningKey=
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("!@##%^465dg$%#$se563@$$Q$#%52$%#$5$%#$32143@#$@#$#%"))
+
+                };
+
+            });
             #endregion
 
             #region Handel CORSE 
