@@ -1,6 +1,7 @@
 
 using ATechSystem.Models;
 using ATechSystem.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ATechSystem
@@ -22,6 +23,9 @@ namespace ATechSystem
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ATechSystem_db"));
             });
+             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ATechSystemContext>();
+
             #endregion
 
             #region Register Repository
